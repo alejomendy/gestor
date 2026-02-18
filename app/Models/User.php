@@ -6,11 +6,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
+use Filament\Models\Contracts\FilamentUser;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles, HasPanelShield;
+
+    public function canAccessPanel(\Filament\Panel $panel): bool
+    {
+        // Si el usuario tiene el rol admin, entra.
+        if ($this->hasRole('admin')) {
+            return true;
+        }
+
+        // Si es el primer usuario y no hay roles asignados aún, permitimos entrar para configurar.
+        return $this->id === 1;
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +35,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'photo_path',
+        'is_active',
     ];
 
     /**
