@@ -17,6 +17,8 @@ class DeclaracionJurada extends Model
         'domicilio',
         'lugar_fecha',
         'fecha_declaracion',
+        'dinero_efectivo_pesos',
+        'dinero_efectivo_moneda_extranjera',
     ];
 
     protected $casts = [
