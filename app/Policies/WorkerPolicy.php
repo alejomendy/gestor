@@ -1,68 +1,70 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
-use App\Models\User;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Worker;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class WorkerPolicy
 {
     use HandlesAuthorization;
-
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
+    
+    public function viewAny(AuthUser $authUser): bool
     {
-        return $user->id === 1 || $user->hasRole(['admin', 'jefe', 'empleado']);
+        return $authUser->can('ViewAny:Worker');
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, $worker): bool
+    public function view(AuthUser $authUser, Worker $worker): bool
     {
-        return $user->id === 1 || $user->hasRole(['admin', 'jefe', 'empleado']);
+        return $authUser->can('View:Worker');
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
+    public function create(AuthUser $authUser): bool
     {
-        return $user->hasRole(['admin', 'jefe']);
+        return $authUser->can('Create:Worker');
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, $worker): bool
+    public function update(AuthUser $authUser, Worker $worker): bool
     {
-        return $user->hasRole(['admin', 'jefe']);
+        return $authUser->can('Update:Worker');
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, $worker): bool
+    public function delete(AuthUser $authUser, Worker $worker): bool
     {
-        return $user->hasRole('admin');
+        return $authUser->can('Delete:Worker');
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, $worker): bool
+    public function restore(AuthUser $authUser, Worker $worker): bool
     {
-        return $user->hasRole('admin');
+        return $authUser->can('Restore:Worker');
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, $worker): bool
+    public function forceDelete(AuthUser $authUser, Worker $worker): bool
     {
-        return $user->hasRole('admin');
+        return $authUser->can('ForceDelete:Worker');
     }
+
+    public function forceDeleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('ForceDeleteAny:Worker');
+    }
+
+    public function restoreAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('RestoreAny:Worker');
+    }
+
+    public function replicate(AuthUser $authUser, Worker $worker): bool
+    {
+        return $authUser->can('Replicate:Worker');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Worker');
+    }
+
 }

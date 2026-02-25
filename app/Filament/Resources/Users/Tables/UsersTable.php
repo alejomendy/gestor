@@ -14,33 +14,33 @@ class UsersTable
     {
         return $table
             ->columns([
-            TextColumn::make('name')
-            ->searchable(),
-            TextColumn::make('email')
-            ->label('Email address')
-            ->searchable(),
-            TextColumn::make('email_verified_at')
-            ->dateTime()
-            ->sortable(),
-            TextColumn::make('roles.name')
-            ->badge()
-            ->label('Rol')
-            ->sortable(),
-            \Filament\Tables\Columns\IconColumn::make('is_active')
-            ->label('Activo')
-            ->boolean()
-            ->sortable(),
-        ])
+                TextColumn::make('name')
+                    ->searchable(),
+                TextColumn::make('email')
+                    ->label('Email address')
+                    ->searchable(),
+                TextColumn::make('email_verified_at')
+                    ->dateTime()
+                    ->sortable(),
+                TextColumn::make('roles.name')
+                    ->badge()
+                    ->label('Rol')
+                    ->sortable(),
+                \Filament\Tables\Columns\IconColumn::make('is_active')
+                    ->label('Activo')
+                    ->boolean()
+                    ->sortable(),
+            ])
             ->filters([
-            //
-        ])
+                //
+            ])
             ->recordActions([
-            EditAction::make(),
-        ])
+                EditAction::make(),
+            ])
             ->toolbarActions([
-            BulkActionGroup::make([
-                DeleteBulkAction::make(),
-            ]),
-        ]);
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 }

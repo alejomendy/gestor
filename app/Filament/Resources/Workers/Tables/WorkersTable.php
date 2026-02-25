@@ -24,12 +24,12 @@ class WorkersTable
                 TextColumn::make('status')
                     ->sortable()
                     ->badge()
-                    ->formatStateUsing(fn (int $state): string => match ($state) {
+                    ->formatStateUsing(fn(int $state): string => match ($state) {
                         1 => 'Active',
                         0 => 'Inactive',
                         default => 'Unknown',
                     })
-                    ->color(fn (int $state): string => match ($state) {
+                    ->color(fn(int $state): string => match ($state) {
                         1 => 'success',
                         0 => 'danger',
                         default => 'gray',
@@ -43,6 +43,11 @@ class WorkersTable
                 //
             ])
             ->recordActions([
+                \Filament\Actions\Action::make('crearDeclaracion')
+                    ->label('Declaración Jurada')
+                    ->icon('heroicon-o-document-text')
+                    ->color('warning')
+                    ->url(fn($record) => \App\Filament\Resources\DeclaracionJurada\DeclaracionJuradaResource::getUrl('create', ['worker_id' => $record->id])),
                 ViewAction::make(),
                 EditAction::make(),
             ])
